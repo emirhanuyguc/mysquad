@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/providers/employee_locations.dart';
 import 'package:flutter_complete_guide/providers/employee_tasks.dart';
 import 'package:flutter_complete_guide/providers/employees.dart';
 import 'package:flutter_complete_guide/providers/reports.dart';
@@ -45,9 +44,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Reports(),
         ),
-        ChangeNotifierProvider.value(
-          value: EmployeeLocations(),
-        ),
+        // ignore: missing_required_param
         ChangeNotifierProxyProvider<Auth, Employees>(
           update: (ctx, auth, previousEmployees) => Employees(
             auth.token,

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/providers/employee_locations.dart';
 import 'package:flutter_complete_guide/widgets/app_drawer.dart';
 import 'package:flutter_complete_guide/widgets/interactive_maps_marker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import '../../providers/reports.dart';
 
 class MapScreen extends StatelessWidget {
   static const routeName = '/map-screen';
+
+  Future<void> _getLocations(BuildContext context) async {
+    await Provider.of<Reports>(context, listen: false).fetchLocations();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +19,16 @@ class MapScreen extends StatelessWidget {
         title: Text('Ekibim Nerede ?'),
       ),
       body: FutureBuilder(
+        future: _getLocations(context),
         builder: (context, snapshot) =>
             snapshot.connectionState == ConnectionState.waiting
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : Consumer<EmployeeLocations>(
+                : Consumer<Reports>(
                     builder: (ctx, locationsData, _) => InteractiveMapsMarker(
                       items: locationsData.markersList,
-                      center: LatLng(31.4906504, 74.319872),
+                      center: LatLng(40.77182120256615, 29.966424681822193),
                       itemContent: (context, index) {
                         MarkerItem item = locationsData.markersList[index];
                         return BottomTile(item: item);
@@ -50,6 +55,7 @@ class BottomTile extends StatelessWidget {
               ? Container(
                   height: 86.00,
                   width: 86.00,
+                  margin: EdgeInsets.fromLTRB(3.0, 0.0, 0.0, 0.0),
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.fill,

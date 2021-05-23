@@ -227,7 +227,7 @@ class _AuthCardState extends State<AuthCard>
                 if (_authMode == AuthMode.Signup) UserImagePicker(_pickedImage),
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Şirket Adı'),
+                    decoration: InputDecoration(labelText: 'Ekip Adı'),
                     keyboardType: TextInputType.text,
                     onSaved: (value) {
                       _authData['companyName'] = value;

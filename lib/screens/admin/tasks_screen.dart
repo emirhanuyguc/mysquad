@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../models/task.dart';
 import '../../providers/tasks.dart';
+import '../report_detail_screen.dart';
 
 class TasksScreen extends StatefulWidget {
   static const routeName = '/tasks-screen';
@@ -253,26 +254,30 @@ class _TasksScreen extends State<TasksScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      Container(
-                        constraints: BoxConstraints(
-                          maxHeight: 50,
-                        ),
-                        child: TextFormField(
-                          controller: tfDecController,
-                          maxLines: null,
-                          style: TextStyle(
-                            fontSize: 18,
+                      SingleChildScrollView(
+                        child: Container(
+                          constraints: BoxConstraints(
+                            maxHeight: 100,
                           ),
-                          decoration: InputDecoration(
-                              hintText: "Açıklama",
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 18,
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                color: _themeColor,
-                              ))),
+                          child: TextFormField(
+                            controller: tfDecController,
+                            keyboardType: TextInputType.multiline,
+                            minLines: 2,
+                            maxLines: null,
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                            decoration: InputDecoration(
+                                hintText: "Açıklama",
+                                hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                  color: _themeColor,
+                                ))),
+                          ),
                         ),
                       ),
                       ListTile(
@@ -425,7 +430,12 @@ class _TasksScreen extends State<TasksScreen> {
                                         5.0, 10.0, 5.0, 0.0),
                                     child: ElevatedButton(
                                       child: Text('Görüntüle'),
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        Navigator.of(context).pushNamed(
+                                            ReportDetailScreen.routeName,
+                                            arguments:
+                                                tasksData.tasks[index].id);
+                                      },
                                     ),
                                   )
                                 : null),

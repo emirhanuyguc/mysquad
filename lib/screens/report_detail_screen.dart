@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/helpers/location_helper.dart';
 import 'package:flutter_complete_guide/providers/reports.dart';
 import 'package:flutter_complete_guide/widgets/app_drawer.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ReportDetailScreen extends StatefulWidget {
@@ -17,6 +18,8 @@ class ReportDetailScreen extends StatefulWidget {
 
 class _ReportDetailScreenState extends State<ReportDetailScreen> {
   String _previewImageUrl;
+  final dateFormat = new DateFormat("yyyy-MM-dd");
+  final timeFormat = new DateFormat("HH:mm");
 
   void _showPreview(double lat, double lng) {
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
@@ -38,6 +41,11 @@ class _ReportDetailScreenState extends State<ReportDetailScreen> {
     ).findByTaskId(taskId);
     _showPreview(
         loadedReport.location.latitude, loadedReport.location.longitude);
+
+    final reportDate = dateFormat.format(loadedReport.reportDate);
+    final reportHour = (loadedReport.reportHour.hour).toString() +
+        ':' +
+        loadedReport.reportHour.minute.toString().padLeft(2, '0');
     return Scaffold(
       // appBar: AppBar(
       //   title: Text(loadedProduct.title),
@@ -75,9 +83,13 @@ class _ReportDetailScreenState extends State<ReportDetailScreen> {
                     SizedBox(
                       height: 10,
                     ),
+                    Text("Adres: ${loadedReport.location.address}"),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Container(
-                      width: 150,
-                      height: 150,
+                      width: 400,
+                      height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.fill,
@@ -89,6 +101,8 @@ class _ReportDetailScreenState extends State<ReportDetailScreen> {
                     SizedBox(
                       height: 10,
                     ),
+                    Text("Açıklama: ${loadedReport.reportDescription}"),
+                    Text("Rapor Tarihi: ${reportDate} ${reportHour}"),
                   ],
                 ),
               ),

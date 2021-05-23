@@ -44,6 +44,7 @@ class EmployeeTasks with ChangeNotifier {
               id: firebaseId,
               companyId: taskData['companyId'],
               employeeId: taskData['employeeId'],
+              employeeName: taskData['employeeName'],
               title: taskData['title'],
               description: taskData['description'],
               taskDate: DateTime.parse(taskData['taskDate']),
